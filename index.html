@@ -1,1 +1,1782 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Medication Review – Home Medicines Review Service</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Medication Review provides professional Home Medicines Review services in Australia – because each pill should have a purpose." />
+
+  <style>
+    :root {
+      --color-primary: #2f6fa3;       /* deep blue */
+      --color-primary-dark: #214d72;
+      --color-secondary: #6fa043;     /* green */
+      --color-accent: #cdb36e;        /* gold */
+      --color-bg: #f5f8fb;
+      --color-text: #16324f;
+      --color-muted: #6c7a93;
+      --radius-lg: 18px;
+      --radius-md: 12px;
+      --shadow-soft: 0 18px 40px rgba(15, 49, 80, 0.12);
+      --max-width: 1120px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: radial-gradient(circle at top left, #ffffff 0, var(--color-bg) 60%, #e6eef7 100%);
+      color: var(--color-text);
+      line-height: 1.6;
+    }
+
+    img, video {
+      max-width: 100%;
+      display: block;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .page {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Top bar */
+
+    .top-bar {
+      background: var(--color-primary-dark);
+      color: #f5f7fb;
+      font-size: 0.9rem;
+    }
+
+    .top-bar-inner {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 0.36rem 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      gap: 1.5rem;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .top-bar-inner span {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      opacity: 0.9;
+    }
+
+    /* Header / nav */
+
+    header {
+      background: rgba(255, 255, 255, 0.98);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 1px 0 rgba(15, 49, 80, 0.05);
+      position: sticky;
+      top: 0;
+      z-index: 20;
+    }
+
+    .header-inner {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 0.9rem 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1.5rem;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .brand-logo {
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      overflow: hidden;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      background: #ffffff;
+    }
+
+    .brand-text {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .brand-text span:first-child {
+      font-weight: 700;
+      letter-spacing: 0.03em;
+      font-size: 1.02rem;
+      text-transform: uppercase;
+    }
+
+    .brand-word-blue {
+      color: var(--color-primary-dark);
+    }
+
+    .brand-word-green {
+      color: var(--color-secondary);
+    }
+
+    .brand-text span:last-child {
+      font-size: 0.86rem;
+      color: var(--color-muted);
+    }
+
+    nav {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 1.4rem;
+      font-size: 0.96rem;
+    }
+
+    .nav-links a {
+      position: relative;
+      padding-bottom: 0.2rem;
+    }
+
+    .nav-links a::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--color-secondary), var(--color-primary));
+      transition: width 0.18s ease-out;
+    }
+
+    .nav-links a:hover::after,
+    .nav-links a:focus-visible::after {
+      width: 100%;
+    }
+
+    .nav-cta {
+      padding: 0.55rem 1rem;
+      border-radius: 999px;
+      border: 0;
+      background: linear-gradient(135deg, var(--color-secondary), var(--color-primary));
+      color: #ffffff;
+      font-size: 0.93rem;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      cursor: pointer;
+      box-shadow: 0 8px 20px rgba(13, 73, 118, 0.25);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      white-space: nowrap;
+    }
+
+    .nav-cta:hover {
+      filter: brightness(1.05);
+      transform: translateY(-1px);
+    }
+
+    .nav-cta:active {
+      transform: translateY(0);
+      box-shadow: 0 4px 12px rgba(13, 73, 118, 0.25);
+    }
+
+    .nav-toggle {
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      gap: 5px;
+      width: 40px;
+      height: 34px;
+      border-radius: 999px;
+      border: 1px solid rgba(22, 50, 79, 0.12);
+      background: #ffffff;
+      cursor: pointer;
+      padding: 4px 8px;
+    }
+
+    .nav-toggle span {
+      height: 2px;
+      width: 100%;
+      background: var(--color-primary-dark);
+      border-radius: 999px;
+      transition: transform 0.2s ease, opacity 0.2s ease;
+    }
+
+    .nav-toggle[aria-expanded="true"] span:nth-child(1) {
+      transform: translateY(3.5px) rotate(45deg);
+    }
+
+    .nav-toggle[aria-expanded="true"] span:nth-child(2) {
+      opacity: 0;
+    }
+
+    .nav-toggle[aria-expanded="true"] span:nth-child(3) {
+      transform: translateY(-3.5px) rotate(-45deg);
+    }
+
+    main {
+      flex: 1;
+    }
+
+    .section {
+      padding: 3.7rem 1.5rem;
+    }
+
+    .section-alt {
+      background: linear-gradient(135deg, #ffffff 0, #f0f5fb 50%, #e7f1f4 100%);
+    }
+
+    .section-inner {
+      max-width: var(--max-width);
+      margin: 0 auto;
+    }
+
+    /* Hero */
+
+    .hero {
+      padding-top: 4.3rem;
+      padding-bottom: 4.5rem;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: 3rem;
+      align-items: center;
+    }
+
+    .eyebrow {
+      text-transform: uppercase;
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.16em;
+      color: var(--color-secondary);
+      margin-bottom: 0.7rem;
+    }
+
+    .hero h1 {
+      font-size: clamp(2.2rem, 3vw + 1.4rem, 3.1rem);
+      line-height: 1.15;
+      margin-bottom: 0.9rem;
+      color: var(--color-primary-dark);
+    }
+
+    .hero-highlight {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.08rem 0.7rem;
+      border-radius: 999px;
+      background: rgba(111, 160, 67, 0.09);
+      color: var(--color-secondary);
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      font-weight: 600;
+      margin-bottom: 1.2rem;
+    }
+
+    .hero p {
+      font-size: 1rem;
+      color: var(--color-muted);
+      max-width: 540px;
+      margin-bottom: 1.6rem;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.9rem;
+      align-items: center;
+      margin-bottom: 1.4rem;
+    }
+
+    .btn-primary {
+      padding: 0.85rem 1.5rem;
+      border-radius: 999px;
+      border: 0;
+      background: linear-gradient(135deg, var(--color-secondary), var(--color-primary));
+      color: #ffffff;
+      font-weight: 600;
+      letter-spacing: 0.03em;
+      font-size: 0.95rem;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      box-shadow: 0 14px 30px rgba(15, 85, 132, 0.27);
+    }
+
+    .btn-primary:hover {
+      filter: brightness(1.04);
+      transform: translateY(-1px);
+    }
+
+    .btn-outline {
+      padding: 0.82rem 1.4rem;
+      border-radius: 999px;
+      border: 1px solid rgba(22, 50, 79, 0.18);
+      background: #ffffff;
+      color: var(--color-text);
+      font-weight: 500;
+      font-size: 0.92rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      cursor: pointer;
+    }
+
+    .btn-outline:hover {
+      border-color: rgba(22, 50, 79, 0.32);
+      box-shadow: 0 10px 24px rgba(15, 49, 80, 0.12);
+    }
+
+    .hero-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+      font-size: 0.86rem;
+      color: var(--color-muted);
+    }
+
+    .hero-meta span {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.42rem;
+    }
+
+    .hero-card {
+      border-radius: var(--radius-lg);
+      padding: 1.6rem 1.7rem;
+      background: radial-gradient(circle at top left, #ffffff 0, #f3f7fc 55%, #e7f2f7 100%);
+      box-shadow: var(--shadow-soft);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-pill {
+      position: absolute;
+      right: -40px;
+      top: -30px;
+      width: 180px;
+      opacity: 0.18;
+      transform: rotate(-15deg);
+    }
+
+    .hero-card h2 {
+      font-size: 1.05rem;
+      margin-bottom: 0.3rem;
+      color: var(--color-primary-dark);
+    }
+
+    .hero-card p {
+      font-size: 0.9rem;
+      color: var(--color-muted);
+      margin-bottom: 0.8rem;
+    }
+
+    .hero-stats {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 0.8rem 1rem;
+      font-size: 0.86rem;
+    }
+
+    .hero-stat-label {
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.13em;
+      color: var(--color-muted);
+      margin-bottom: 0.15rem;
+    }
+
+    .hero-stat-value {
+      font-weight: 700;
+      color: var(--color-primary-dark);
+    }
+
+    .hero-photo {
+      margin-top: 1.4rem;
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      border: 1px solid rgba(46, 110, 157, 0.09);
+      position: relative;
+      background: #000;
+    }
+
+    .hero-photo img,
+    .hero-photo video {
+      width: 100%;
+      height: 210px;
+      object-fit: cover;
+    }
+
+    /* Section headings */
+
+    .section-header {
+      margin-bottom: 2.1rem;
+      max-width: 680px;
+    }
+
+    .section-header h2 {
+      font-size: 1.55rem;
+      margin-bottom: 0.4rem;
+      color: var(--color-primary-dark);
+    }
+
+    .section-header p {
+      color: var(--color-muted);
+      font-size: 0.98rem;
+    }
+
+    .tagline {
+      text-transform: uppercase;
+      font-size: 0.78rem;
+      letter-spacing: 0.16em;
+      color: var(--color-secondary);
+      font-weight: 600;
+      margin-bottom: 0.35rem;
+    }
+
+    /* How it works */
+
+    .steps-grid {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 1.4rem;
+    }
+
+    .step-card {
+      background: #ffffff;
+      border-radius: var(--radius-md);
+      padding: 1.2rem 1.1rem;
+      border: 1px solid rgba(22, 50, 79, 0.06);
+      box-shadow: 0 10px 26px rgba(15, 49, 80, 0.06);
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+    }
+
+    .step-number {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 30% 0, var(--color-accent), var(--color-secondary));
+      color: #ffffff;
+      font-size: 0.9rem;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      margin-bottom: 0.7rem;
+    }
+
+    .step-card h3 {
+      font-size: 0.98rem;
+      margin-bottom: 0.3rem;
+    }
+
+    .step-card p {
+      font-size: 0.9rem;
+      color: var(--color-muted);
+    }
+
+    /* Shared layout */
+
+    .two-col {
+      display: grid;
+      grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+      gap: 2.8rem;
+      align-items: center;
+    }
+
+    .pill-list {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 1.1rem;
+    }
+
+    .pill-card {
+      background: #ffffff;
+      border-radius: var(--radius-md);
+      border: 1px solid rgba(22, 50, 79, 0.06);
+      padding: 1rem 1.1rem;
+      box-shadow: 0 14px 32px rgba(15, 49, 80, 0.08);
+    }
+
+    .pill-card h3 {
+      font-size: 0.95rem;
+      margin-bottom: 0.3rem;
+      color: var(--color-primary-dark);
+    }
+
+    .pill-card p {
+      font-size: 0.88rem;
+      color: var(--color-muted);
+    }
+
+    .section-illustration {
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      box-shadow: 0 18px 40px rgba(12, 58, 99, 0.35);
+      position: relative;
+      background: #000;
+    }
+
+    .section-illustration img {
+      width: 100%;
+      height: 100%;
+      min-height: 240px;
+      object-fit: cover;
+    }
+
+    .section-illustration-badge {
+      position: absolute;
+      bottom: 1.2rem;
+      left: 1.2rem;
+      background: rgba(255, 255, 255, 0.96);
+      border-radius: var(--radius-md);
+      padding: 0.65rem 0.9rem;
+      font-size: 0.8rem;
+      color: var(--color-text);
+      max-width: 220px;
+      box-shadow: 0 14px 32px rgba(10, 55, 85, 0.4);
+    }
+
+    .section-illustration-badge strong {
+      color: var(--color-primary-dark);
+    }
+
+    /* Pharmacist tabs */
+
+    .pharmacist-tab-bar {
+      display: inline-flex;
+      padding: 0.25rem;
+      border-radius: 999px;
+      background: rgba(22, 50, 79, 0.05);
+      margin-bottom: 1.6rem;
+      gap: 0.25rem;
+    }
+
+    .pharmacist-tab {
+      border: 0;
+      background: transparent;
+      padding: 0.45rem 1rem;
+      border-radius: 999px;
+      font-size: 0.86rem;
+      cursor: pointer;
+      color: var(--color-muted);
+      font-weight: 500;
+    }
+
+    .pharmacist-tab.active {
+      background: #ffffff;
+      color: var(--color-primary-dark);
+      box-shadow: 0 6px 18px rgba(15, 49, 80, 0.18);
+    }
+
+    .pharmacist-tab-panel {
+      display: none;
+    }
+
+    .pharmacist-tab-panel.active {
+      display: block;
+    }
+
+    .pharmacist-join-list {
+      grid-template-columns: minmax(0, 1fr);
+    }
+
+    /* Referral */
+
+    .referral-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.1fr) minmax(0, 1.2fr);
+      gap: 2.4rem;
+      align-items: flex-start;
+    }
+
+    .referral-panel {
+      background: linear-gradient(135deg, #ffffff 0, #f7fbff 45%, #edf4ff 100%);
+      border-radius: var(--radius-lg);
+      padding: 1.6rem 1.8rem;
+      box-shadow: var(--shadow-soft);
+      border: 1px solid rgba(22, 50, 79, 0.09);
+    }
+
+    .referral-panel h3 {
+      font-size: 1.08rem;
+      margin-bottom: 0.6rem;
+      color: var(--color-primary-dark);
+    }
+
+    .referral-panel p {
+      font-size: 0.9rem;
+      color: var(--color-muted);
+      margin-bottom: 0.9rem;
+    }
+
+    .referral-list {
+      list-style: none;
+      font-size: 0.95rem;
+    }
+
+    .referral-list li {
+      padding: 0.4rem 0;
+      display: flex;
+      justify-content: space-between;
+      gap: 1.2rem;
+      border-bottom: 1px dashed rgba(22, 50, 79, 0.12);
+    }
+
+    .referral-list span:first-child {
+      font-weight: 600;
+      color: var(--color-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      font-size: 0.82rem;
+    }
+
+    .referral-list span:last-child {
+      color: var(--color-primary-dark);
+      font-weight: 600;
+    }
+
+    .referral-note {
+      margin-top: 0.8rem;
+      font-size: 0.82rem;
+      color: var(--color-muted);
+    }
+
+    .referral-note strong {
+      color: var(--color-primary-dark);
+    }
+
+    .referral-form {
+      background: rgba(255, 255, 255, 0.98);
+      border-radius: var(--radius-lg);
+      padding: 1.6rem 1.7rem;
+      box-shadow: var(--shadow-soft);
+      border: 1px solid rgba(22, 50, 79, 0.06);
+    }
+
+    .referral-form h3 {
+      font-size: 1.02rem;
+      margin-bottom: 0.4rem;
+    }
+
+    .referral-form p {
+      font-size: 0.9rem;
+      color: var(--color-muted);
+      margin-bottom: 1.1rem;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 0.9rem 1rem;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+      font-size: 0.88rem;
+    }
+
+    .form-group label {
+      font-weight: 500;
+      color: var(--color-text);
+    }
+
+    .form-group input,
+    .form-group textarea,
+    .form-group select {
+      border-radius: 999px;
+      border: 1px solid rgba(22, 50, 79, 0.16);
+      padding: 0.55rem 0.85rem;
+      font: inherit;
+      outline: none;
+      background: rgba(255, 255, 255, 0.96);
+      transition: border-color 0.16s ease, box-shadow 0.16s ease, background 0.16s ease;
+    }
+
+    .form-group textarea {
+      min-height: 110px;
+      resize: vertical;
+      border-radius: 16px;
+    }
+
+    .form-group input:focus,
+    .form-group textarea:focus,
+    .form-group select:focus {
+      border-color: var(--color-primary);
+      box-shadow: 0 0 0 1px rgba(47, 111, 163, 0.15);
+      background: #ffffff;
+    }
+
+    .form-actions {
+      margin-top: 1.1rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0.7rem;
+      font-size: 0.8rem;
+      color: var(--color-muted);
+    }
+
+    .hint {
+      font-size: 0.78rem;
+      color: var(--color-muted);
+    }
+
+    .form-thankyou {
+      margin-top: 0.9rem;
+      font-size: 0.86rem;
+      color: var(--color-secondary);
+      background: rgba(111, 160, 67, 0.08);
+      border-radius: 999px;
+      padding: 0.5rem 0.85rem;
+    }
+
+    /* Eligibility / FAQs */
+
+    .columns-3 {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 1.3rem;
+    }
+
+    .tile {
+      background: #ffffff;
+      border-radius: var(--radius-md);
+      padding: 1.1rem 1.2rem;
+      border: 1px solid rgba(22, 50, 79, 0.06);
+      box-shadow: 0 14px 32px rgba(15, 49, 80, 0.06);
+      font-size: 0.9rem;
+      color: var(--color-muted);
+    }
+
+    .tile h3 {
+      font-size: 0.98rem;
+      margin-bottom: 0.4rem;
+      color: var(--color-primary-dark);
+    }
+
+    .tile ul {
+      margin-left: 1rem;
+      margin-top: 0.15rem;
+    }
+
+    .tile ul li {
+      margin-bottom: 0.15rem;
+    }
+
+    .faq-list {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 1.1rem;
+    }
+
+    .faq-item {
+      padding: 1rem 1.1rem;
+      border-radius: var(--radius-md);
+      background: #ffffff;
+      border: 1px solid rgba(22, 50, 79, 0.06);
+      box-shadow: 0 12px 28px rgba(15, 49, 80, 0.06);
+      font-size: 0.9rem;
+      color: var(--color-muted);
+    }
+
+    .faq-item h3 {
+      font-size: 0.96rem;
+      margin-bottom: 0.35rem;
+      color: var(--color-primary-dark);
+    }
+
+    /* About */
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: 2.5rem;
+      align-items: center;
+    }
+
+    .badge-inline {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      padding: 0.25rem 0.7rem;
+      border-radius: 999px;
+      font-size: 0.78rem;
+      background: rgba(47, 111, 163, 0.08);
+      color: var(--color-primary-dark);
+      margin-bottom: 0.55rem;
+    }
+
+    .about-list {
+      list-style: none;
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 0.7rem 1.2rem;
+      font-size: 0.9rem;
+      color: var(--color-muted);
+    }
+
+    .about-list li::before {
+      content: "•";
+      color: var(--color-secondary);
+      font-weight: 700;
+      display: inline-block;
+      width: 1rem;
+      margin-left: -1rem;
+    }
+
+    /* Footer */
+
+    footer {
+      background: #0f2840;
+      color: rgba(230, 239, 252, 0.92);
+      padding: 2.4rem 1.5rem 1.6rem;
+      margin-top: 2rem;
+    }
+
+    .footer-inner {
+      max-width: var(--max-width);
+      margin: 0 auto;
+    }
+
+    .footer-columns {
+      display: grid;
+      grid-template-columns: 1.3fr 1fr 1fr;
+      gap: 1.8rem;
+      font-size: 0.86rem;
+    }
+
+    .footer-brand {
+      max-width: 340px;
+    }
+
+    .footer-brand h3 {
+      font-size: 1.02rem;
+      margin-bottom: 0.35rem;
+    }
+
+    .footer-brand p {
+      color: rgba(215, 228, 245, 0.92);
+    }
+
+    .footer-heading {
+      font-weight: 600;
+      font-size: 0.9rem;
+      margin-bottom: 0.5rem;
+      text-transform: uppercase;
+      letter-spacing: 0.13em;
+      color: rgba(233, 243, 255, 0.96);
+    }
+
+    .footer-list {
+      list-style: none;
+      display: grid;
+      gap: 0.25rem;
+    }
+
+    .footer-list a {
+      color: rgba(215, 228, 245, 0.92);
+    }
+
+    .footer-meta {
+      margin-top: 1.3rem;
+      padding-top: 0.9rem;
+      border-top: 1px solid rgba(182, 201, 225, 0.26);
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 0.7rem;
+      font-size: 0.75rem;
+      color: rgba(198, 214, 236, 0.88);
+    }
+
+    .footer-meta span {
+      opacity: 0.9;
+    }
+
+    /* Responsive */
+
+    @media (max-width: 960px) {
+      .hero-grid,
+      .two-col,
+      .referral-grid,
+      .about-grid,
+      .footer-columns {
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      .hero {
+        padding-top: 3.4rem;
+      }
+
+      .hero-card {
+        margin-top: 0.7rem;
+      }
+
+      .steps-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+
+      .pill-list {
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      .columns-3 {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .faq-list {
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      .form-grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      .header-inner {
+        align-items: center;
+      }
+
+      nav {
+        align-items: flex-start;
+      }
+    }
+
+    @media (max-width: 760px) {
+      .top-bar-inner {
+        justify-content: center;
+      }
+
+      .hero-grid {
+        gap: 2.4rem;
+      }
+
+      .steps-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .columns-3 {
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      .nav-toggle {
+        display: flex;
+      }
+
+      nav {
+        width: 100%;
+        justify-content: flex-end;
+      }
+
+      .nav-links {
+        position: absolute;
+        top: 100%;
+        right: 0;
+        left: 0;
+        background: #ffffff;
+        border-bottom: 1px solid rgba(15, 49, 80, 0.08);
+        display: none;
+        flex-direction: column;
+        padding: 0.7rem 1.5rem 1rem;
+        gap: 0.6rem;
+      }
+
+      .nav-links.open {
+        display: flex;
+      }
+
+      .nav-cta {
+        display: none;
+      }
+
+      .footer-columns {
+        gap: 2rem;
+      }
+    }
+
+    @media (max-width: 520px) {
+      .hero {
+        padding-top: 2.8rem;
+      }
+
+      .hero-card {
+        padding: 1.3rem 1.35rem;
+      }
+
+      .steps-grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      .section {
+        padding-inline: 1.25rem;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="page">
+
+    <!-- Top bar -->
+    <div class="top-bar">
+      <div class="top-bar-inner">
+        <span>Phone: <strong>03 4250 9553</strong></span>
+        <span>Fax: <strong>03 9022 7830</strong></span>
+        <span>Email: <a href="mailto:hmr@mymedicationreview.com.au">hmr@mymedicationreview.com.au</a></span>
+        <span>HealthLink ID: <strong>medrview</strong></span>
+      </div>
+    </div>
+
+    <!-- Header / navigation -->
+    <header>
+      <div class="header-inner">
+        <a href="#top" class="brand">
+          <div class="brand-logo">
+            <!-- Replace with your logo path -->
+            <img src="assets/logo-medication-review.png" alt="Medication Review Australia logo" />
+          </div>
+          <div class="brand-text">
+            <span>
+              <span class="brand-word-blue">Medication</span>
+              <span class="brand-word-green">Review</span>
+            </span>
+            <span>Home Medicines Review service</span>
+          </div>
+        </a>
+
+        <nav aria-label="Primary">
+          <button class="nav-toggle" aria-expanded="false" aria-controls="primary-nav">
+            <span></span><span></span><span></span>
+          </button>
+          <div id="primary-nav" class="nav-links">
+            <a href="#how-it-works">How it works</a>
+            <a href="#for-gps">GPs</a>
+            <a href="#for-pharmacists">Pharmacists</a>
+            <a href="#for-patients">Patients</a>
+            <a href="#eligibility">Eligibility</a>
+            <a href="#faq">FAQs</a>
+            <a href="#contact">Contact</a>
+          </div>
+        </nav>
+
+        <a href="#referral" class="nav-cta">Refer a patient ▸</a>
+      </div>
+    </header>
+
+    <main id="top">
+
+      <!-- Hero -->
+      <section class="section hero">
+        <div class="section-inner hero-grid">
+          <div>
+            <div class="eyebrow">Medication Review Australia</div>
+            <h1>Because each pill should have a purpose.</h1>
+            <div class="hero-highlight">
+              <span>Home Medicines Review · GP‑partnered · Patient‑centred</span>
+            </div>
+            <p>
+              Medication Review works with general practitioners, pharmacists and patients to deliver comprehensive Home Medicines Reviews across Australia – simplifying complex regimens, reducing risk and improving everyday quality of life.
+            </p>
+
+            <div class="hero-actions">
+              <a href="#referral" class="btn-primary">GPs – submit a referral</a>
+              <a href="#how-it-works" class="btn-outline">How the service works</a>
+            </div>
+
+            <div class="hero-meta">
+              <span>ABN: <strong>428 204 018 61</strong></span>
+              <span>Phone: <strong>03 4250 9553</strong></span>
+              <span>Email: <strong><a href="mailto:hmr@mymedicationreview.com.au">hmr@mymedicationreview.com.au</a></strong></span>
+            </div>
+          </div>
+
+          <aside class="hero-card" aria-label="At a glance">
+            <!-- Optional decorative pill / capsule graphic -->
+            <img class="hero-pill" src="assets/pill-overlay.png" alt="" aria-hidden="true" />
+            <h2>Home Medicines Review made easy</h2>
+            <p>
+              We handle the scheduling and home visit, then send clear recommendations back to the referring GP.
+            </p>
+
+            <div class="hero-stats">
+              <div>
+                <div class="hero-stat-label">Focus</div>
+                <div class="hero-stat-value">Complex &amp; high‑risk patients</div>
+              </div>
+              <div>
+                <div class="hero-stat-label">Approach</div>
+                <div class="hero-stat-value">Collaborative with GPs</div>
+              </div>
+              <div>
+                <div class="hero-stat-label">Setting</div>
+                <div class="hero-stat-value">In‑home consultation</div>
+              </div>
+              <div>
+                <div class="hero-stat-label">Location</div>
+                <div class="hero-stat-value">Australia‑based service</div>
+              </div>
+            </div>
+
+            <div class="hero-photo">
+              <!-- Banner video: autoplay, muted, looping -->
+              <video autoplay muted loop playsinline aria-label="Pharmacist reviewing a patient's medicines at home">
+                <!-- Put this video file in the same folder as this HTML file, or adjust the path -->
+                <source src="Video_Modification_for_Website_Banner.mp4" type="video/mp4" />
+                Your browser does not support the video tag.
+              </video>
+            </div>
+          </aside>
+        </div>
+      </section>
+
+      <!-- How it works -->
+      <section id="how-it-works" class="section section-alt">
+        <div class="section-inner">
+          <div class="section-header">
+            <div class="tagline">How it works</div>
+            <h2>A simple, structured Home Medicines Review pathway</h2>
+            <p>
+              From referral to report, Medication Review keeps the process straightforward for GPs, pharmacists and patients while maintaining a high standard of clinical care.
+            </p>
+          </div>
+
+          <div class="steps-grid">
+            <div class="step-card">
+              <div class="step-number">1</div>
+              <h3>GP sends referral</h3>
+              <p>
+                The GP or practice nurse sends an HMR referral, current medication list and relevant history via email, fax or HealthLink (<strong>medrview</strong>).
+              </p>
+            </div>
+            <div class="step-card">
+              <div class="step-number">2</div>
+              <h3>We contact the patient</h3>
+              <p>
+                Our accredited pharmacist contacts the patient or carer, explains the service and arranges a convenient time for a home consultation.
+              </p>
+            </div>
+            <div class="step-card">
+              <div class="step-number">3</div>
+              <h3>Comprehensive review</h3>
+              <p>
+                At the review, we reconcile all medicines – prescribed, over‑the‑counter and complementary – and discuss adherence, side effects, devices and lifestyle factors.
+              </p>
+            </div>
+            <div class="step-card">
+              <div class="step-number">4</div>
+              <h3>Clear written report</h3>
+              <p>
+                A structured report with practical, evidence‑informed recommendations is sent securely to the referring GP for consideration and follow‑up.
+              </p>
+            </div>
+            <div class="step-card">
+              <div class="step-number">5</div>
+              <h3>Ongoing support</h3>
+              <p>
+                We are available to clarify recommendations, assist with patient education and support follow‑up medication reviews where required.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- For GPs -->
+      <section id="for-gps" class="section">
+        <div class="section-inner two-col">
+          <div>
+            <div class="section-header">
+              <div class="tagline">For General Practitioners</div>
+              <h2>Designed for busy primary care teams.</h2>
+              <p>
+                Medication Review complements your work in the consulting room, providing detailed medication assessments you can rely on when managing complex patients.
+              </p>
+            </div>
+
+            <div class="pill-list">
+              <div class="pill-card">
+                <h3>Simple referral options</h3>
+                <p>
+                  Refer directly via <strong>HealthLink ID: medrview</strong>, secure email or fax. Our team takes care of contacting the patient and arranging the review.
+                </p>
+              </div>
+              <div class="pill-card">
+                <h3>Clear clinical recommendations</h3>
+                <p>
+                  Reports are concise, actionable and structured for rapid review – including priority issues, suggested changes and patient education needs.
+                </p>
+              </div>
+              <div class="pill-card">
+                <h3>Focus on safety &amp; quality use of medicines</h3>
+                <p>
+                  Particular attention is given to high‑risk medicines, polypharmacy, recent hospital discharge and potential drug–drug interactions.
+                </p>
+              </div>
+              <div class="pill-card">
+                <h3>Collaborative communication</h3>
+                <p>
+                  We’re available to discuss complex cases and ensure recommendations align with your treatment goals and the patient’s preferences.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="section-illustration">
+            <!-- Your own GP image -->
+            <img src="assets/gp-reviewing-report.jpg" alt="GP reviewing a Medication Review report at the clinic desk" />
+            <div class="section-illustration-badge">
+              <strong>GP‑centred workflow</strong><br />
+              Less time chasing details, more time for clinical decisions.
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- For Pharmacists with tabs -->
+      <section id="for-pharmacists" class="section section-alt">
+        <div class="section-inner">
+          <div class="section-header">
+            <div class="tagline">For Pharmacists</div>
+            <h2>Working together to optimise medicines.</h2>
+            <p>
+              Medication Review is pharmacist‑led. We value close collaboration with community pharmacies and accredited pharmacists to support safe and effective medicine use for shared patients.
+            </p>
+          </div>
+
+          <!-- TAB BUTTONS -->
+          <div class="pharmacist-tab-bar" role="tablist" aria-label="Pharmacist options">
+            <button class="pharmacist-tab active" type="button" data-tab="overview" role="tab" aria-selected="true">
+              Service overview
+            </button>
+            <button class="pharmacist-tab" type="button" data-tab="join" role="tab" aria-selected="false">
+              Join our team &amp; enquiries
+            </button>
+          </div>
+
+          <!-- Tab 1: Service overview (existing content) -->
+          <div class="pharmacist-tab-panel active" data-tab-panel="overview" role="tabpanel" aria-hidden="false">
+            <div class="two-col">
+              <div class="section-illustration">
+                <!-- Organised medicines / pharmacist image -->
+                <img src="assets/pharmacist-reviewing-chart.jpg" alt="Accredited pharmacist checking organised patient medicines and a medication chart" />
+                <div class="section-illustration-badge">
+                  <strong>Because each pill should have a purpose.</strong><br />
+                  Partnering with pharmacists to optimise every regimen.
+                </div>
+              </div>
+
+              <div>
+                <div class="pill-list">
+                  <div class="pill-card">
+                    <h3>Respecting existing pharmacy relationships</h3>
+                    <p>
+                      We encourage patients to nominate their usual pharmacy and ensure medication lists and plans can be shared back for dose administration aids, counselling and follow‑up.
+                    </p>
+                  </div>
+                  <div class="pill-card">
+                    <h3>Accredited pharmacist involvement</h3>
+                    <p>
+                      HMRs are conducted by accredited pharmacists with training in medication management, in line with current program rules and professional standards.
+                    </p>
+                  </div>
+                  <div class="pill-card">
+                    <h3>Practical recommendations</h3>
+                    <p>
+                      Reports highlight adherence solutions, device training needs and opportunities to simplify regimens that can be supported by the patient’s regular pharmacy.
+                    </p>
+                  </div>
+                  <div class="pill-card">
+                    <h3>Easy communication</h3>
+                    <p>
+                      Pharmacists can contact us with queries about shared patients, clarification of recommendations or to coordinate follow‑up.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Tab 2: Join our team & enquiries -->
+          <div class="pharmacist-tab-panel" data-tab-panel="join" role="tabpanel" aria-hidden="true">
+            <div class="two-col">
+              <div>
+                <h3 style="margin-bottom:0.4rem;">Join our pharmacist team</h3>
+                <p style="color:var(--color-muted); margin-bottom:0.7rem;">
+                  We partner with accredited pharmacists who are passionate about medication safety, clear communication and patient‑centred care.
+                </p>
+
+                <ul class="about-list pharmacist-join-list">
+                  <li>Work with GP practices on complex, high‑risk patients</li>
+                  <li>Flexible workload and referral‑based reviews</li>
+                  <li>Support from an organised, clinically focused HMR service</li>
+                  <li>Opportunities for ongoing collaboration and feedback</li>
+                </ul>
+
+                <p style="color:var(--color-muted); margin-top:0.8rem;">
+                  To express interest in joining the team, email your CV and accreditation details to
+                  <a href="mailto:hmr@mymedicationreview.com.au?subject=Expression%20of%20interest%20-%20HMR%20pharmacist">hmr@mymedicationreview.com.au</a>.
+                </p>
+
+                <p style="color:var(--color-muted); margin-top:0.4rem;">
+                  For general pharmacist enquiries or to discuss referrals, you can also use the enquiry form in the
+                  <a href="#referral">Referral &amp; contact section</a>.
+                </p>
+
+                <div class="hero-actions" style="margin-top:0.6rem;">
+                  <a href="mailto:hmr@mymedicationreview.com.au?subject=Expression%20of%20interest%20-%20HMR%20pharmacist" class="btn-primary">
+                    Email us to join
+                  </a>
+                  <a href="#referral" class="btn-outline">
+                    Pharmacist enquiry form
+                  </a>
+                </div>
+              </div>
+
+              <div class="section-illustration">
+                <img src="assets/pharmacist-team.jpg" alt="Group of pharmacists collaborating on home medicines reviews" />
+                <div class="section-illustration-badge">
+                  <strong>Join our team</strong><br />
+                  Collaborative, patient‑centred HMR practice.
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- For patients -->
+      <section id="for-patients" class="section">
+        <div class="section-inner two-col">
+          <div class="section-illustration">
+            <!-- Patient / organised meds (no pets) -->
+            <img src="assets/patient-medications-organised.jpg" alt="Organised patient medicines in a weekly dose organiser on a kitchen table with a pharmacist present" />
+            <div class="section-illustration-badge">
+              <strong>Patients &amp; carers feel supported</strong><br />
+              Time to ask questions in a calm, familiar environment.
+            </div>
+          </div>
+
+          <div>
+            <div class="section-header">
+              <div class="tagline">For patients &amp; carers</div>
+              <h2>A calm conversation about medicines, at home.</h2>
+              <p>
+                A Home Medicines Review is a chance to sit down with a pharmacist, away from the pharmacy counter, and talk through every medicine in detail.
+              </p>
+            </div>
+
+            <div class="pill-list">
+              <div class="pill-card">
+                <h3>We come to you</h3>
+                <p>
+                  Reviews are conducted in your home at a time that suits you, your family or your carer.
+                </p>
+              </div>
+              <div class="pill-card">
+                <h3>Plain‑language explanations</h3>
+                <p>
+                  We explain what each medicine is for, how to take it correctly and what side effects to watch for – in terms that make sense.
+                </p>
+              </div>
+              <div class="pill-card">
+                <h3>Up‑to‑date medication list</h3>
+                <p>
+                  You receive a clear list of your current medicines that can be shared with your GP, specialists, hospital team and family.
+                </p>
+              </div>
+              <div class="pill-card">
+                <h3>Support for carers</h3>
+                <p>
+                  Carers are welcome to be present, ask questions and help design medication routines that actually work day to day.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Eligibility / who may benefit -->
+      <section id="eligibility" class="section section-alt">
+        <div class="section-inner">
+          <div class="section-header">
+            <div class="tagline">Eligibility &amp; is this right for me?</div>
+            <h2>Who can have a Home Medicines Review?</h2>
+            <p>
+              Your GP decides if a Home Medicines Review is clinically appropriate. In general, it’s available for people living at home who have a Medicare or DVA card and may be at risk of problems with their medicines.
+            </p>
+          </div>
+
+          <div class="columns-3">
+            <div class="tile">
+              <h3>Basic eligibility</h3>
+              <ul>
+                <li>You have a current Medicare or DVA card.</li>
+                <li>You live in your own home or a community setting (not as a permanent resident in residential aged care).</li>
+                <li>Your GP believes you are at risk of, or already experiencing, medication‑related problems.</li>
+                <li>There is an identifiable clinical need for a Home Medicines Review.</li>
+              </ul>
+            </div>
+            <div class="tile">
+              <h3>Common reasons your GP may suggest an HMR</h3>
+              <ul>
+                <li>You take several regular medicines, especially five or more.</li>
+                <li>You see more than one doctor or get medicines from different places.</li>
+                <li>You’ve recently started new medicines or had your doses changed.</li>
+                <li>You’ve recently been in hospital or to the emergency department.</li>
+                <li>You feel unwell after taking medicines or are worried about side effects.</li>
+                <li>You sometimes miss doses or find your schedule hard to manage.</li>
+              </ul>
+            </div>
+            <div class="tile">
+              <h3>Who should you talk to?</h3>
+              <ul>
+                <li>Start with your GP or practice nurse – they decide if an HMR is right for you.</li>
+                <li>You can bring a family member or carer to your GP appointment and the home visit.</li>
+                <li>If you look after someone else, ask their GP whether an HMR could help them.</li>
+              </ul>
+            </div>
+          </div>
+
+          <p class="hint" style="margin-top:1.1rem;">
+            Only a GP can write a referral for a Home Medicines Review (Medicare item 900). They’ll explain how the service works and any costs related to the GP consultation.
+          </p>
+        </div>
+      </section>
+
+      <!-- Referral & contact -->
+      <section id="referral" class="section">
+        <div class="section-inner referral-grid">
+          <div class="referral-panel">
+            <div class="tagline">Referral options</div>
+            <h3>Send an HMR referral to Medication Review</h3>
+            <p>
+              GPs and practice nurses can refer via their preferred secure channel. Please include a current medication list, relevant history and contact details for the patient or carer.
+            </p>
+
+            <ul class="referral-list">
+              <li>
+                <span>Email</span>
+                <span><a href="mailto:hmr@mymedicationreview.com.au">hmr@mymedicationreview.com.au</a></span>
+              </li>
+              <li>
+                <span>Fax</span>
+                <span>03 9022 7830</span>
+              </li>
+              <li>
+                <span>HealthLink</span>
+                <span>ID: <strong>medrview</strong></span>
+              </li>
+              <li>
+                <span>Phone (enquiries)</span>
+                <span>03 4250 9553</span>
+              </li>
+              <li>
+                <span>Website</span>
+                <span><a href="https://www.mymedicationreview.com.au">www.mymedicationreview.com.au</a></span>
+              </li>
+            </ul>
+
+            <div class="hero-actions" style="margin-top:0.9rem;">
+              <a href="medication-review-contact.vcf" class="btn-outline" download>
+                Download vCard (add to contacts)
+              </a>
+            </div>
+
+            <p class="referral-note">
+              <strong>Tip:</strong> Practices can save these details into their address book or clinical software to make future referrals faster.
+            </p>
+          </div>
+
+          <!-- NOTE: For real email sending you will eventually want server-side handling.
+               This mailto: simply opens the user's email program with the data. -->
+          <form class="referral-form" action="mailto:hmr@mymedicationreview.com.au" method="post" enctype="text/plain">
+            <div class="tagline">Quick enquiry form</div>
+            <h3>Ask a question or request a call back</h3>
+            <p>
+              Use this form for general questions about the service. To send clinical referrals, please continue to use email, fax or HealthLink.
+            </p>
+
+            <div class="form-grid">
+              <div class="form-group">
+                <label for="gp-name">Your name</label>
+                <input id="gp-name" type="text" name="gp-name" placeholder="Dr Jane Smith" />
+              </div>
+              <div class="form-group">
+                <label for="practice">Practice / organisation</label>
+                <input id="practice" type="text" name="practice" placeholder="Example Medical Centre" />
+              </div>
+              <div class="form-group">
+                <label for="email">Email</label>
+                <input id="email" type="email" name="email" placeholder="you@example.com" />
+              </div>
+              <div class="form-group">
+                <label for="phone">Phone</label>
+                <input id="phone" type="tel" name="phone" placeholder="Mobile or practice phone" />
+              </div>
+              <div class="form-group" style="grid-column:1/-1;">
+                <label for="message">How can we help?</label>
+                <textarea id="message" name="message" placeholder="Briefly describe your enquiry or request."></textarea>
+              </div>
+            </div>
+
+            <div class="form-actions">
+              <button type="submit" class="btn-primary">Submit enquiry</button>
+              <span>Submitting this form does not send a clinical referral. Please do not include urgent or emergency information.</span>
+            </div>
+          </form>
+        </div>
+      </section>
+
+      <!-- FAQs -->
+      <section id="faq" class="section section-alt">
+        <div class="section-inner">
+          <div class="section-header">
+            <div class="tagline">FAQs</div>
+            <h2>Common questions about Home Medicines Review</h2>
+            <p>
+              If you have a question that isn’t answered here, contact Medication Review and we’ll be happy to provide more detail.
+            </p>
+          </div>
+
+          <div class="faq-list">
+            <div class="faq-item">
+              <h3>What is a Home Medicines Review (HMR)?</h3>
+              <p>
+                A Home Medicines Review is a structured, GP‑initiated service where an accredited pharmacist reviews a patient’s medicines at home, then provides a written report and recommendations back to the GP.
+              </p>
+            </div>
+            <div class="faq-item">
+              <h3>Is there a cost to the patient?</h3>
+              <p>
+                The pharmacist’s review itself is generally funded for eligible patients under existing government programs. GP consultation fees are determined by each practice. Patients should confirm any potential costs with their GP clinic.
+              </p>
+            </div>
+            <div class="faq-item">
+              <h3>Which areas do you cover?</h3>
+              <p>
+                Medication Review provides services across selected regions in Australia. Coverage depends on location and availability. Practices can contact us for current service areas.
+              </p>
+            </div>
+            <div class="faq-item">
+              <h3>How soon after referral will the review occur?</h3>
+              <p>
+                Timeframes depend on patient availability and location, but we aim to make first contact promptly after receiving a referral and to complete the review as soon as practical for the patient and GP.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- About / contact summary -->
+      <section id="contact" class="section">
+        <div class="section-inner about-grid">
+          <div>
+            <div class="badge-inline">
+              Medication Review · Because each pill should have a purpose.
+            </div>
+            <h2 style="margin-bottom:0.4rem;">Professional, patient‑centred medication reviews.</h2>
+            <p style="color:var(--color-muted); margin-bottom:1rem;">
+              Medication Review is dedicated to improving the safe and effective use of medicines in the community. We partner with general practices, specialists, community pharmacies, patients and carers to deliver high‑quality Home Medicines Reviews.
+            </p>
+
+            <ul class="about-list">
+              <li>Accredited pharmacists with a focus on complex care</li>
+              <li>Clear, structured reports for GPs and primary care teams</li>
+              <li>Respectful, patient‑centred consultations in the patient’s home</li>
+              <li>Support for carers and families navigating complex regimens</li>
+            </ul>
+
+            <p style="margin-top:1.2rem; font-size:0.9rem; color:var(--color-muted);">
+              For more information or to discuss how Medication Review can support your practice, contact us via phone, email or the enquiry form above.
+            </p>
+          </div>
+
+          <div class="referral-panel">
+            <h3>Contact details</h3>
+            <p style="font-size:0.9rem; color:var(--color-muted);">
+              We welcome enquiries from GPs, nurses, pharmacists, allied health professionals, patients and carers.
+            </p>
+
+            <ul class="referral-list" style="margin-bottom:0.6rem;">
+              <li>
+                <span>Website</span>
+                <span><a href="https://www.mymedicationreview.com.au">www.mymedicationreview.com.au</a></span>
+              </li>
+              <li>
+                <span>Phone</span>
+                <span>03 4250 9553</span>
+              </li>
+              <li>
+                <span>Fax</span>
+                <span>03 9022 7830</span>
+              </li>
+              <li>
+                <span>Email</span>
+                <span><a href="mailto:hmr@mymedicationreview.com.au">hmr@mymedicationreview.com.au</a></span>
+              </li>
+              <li>
+                <span>HealthLink</span>
+                <span>ID: <strong>medrview</strong></span>
+              </li>
+              <li>
+                <span>ABN</span>
+                <span>428 204 018 61</span>
+              </li>
+            </ul>
+
+            <p class="hint">
+              <strong>GPs:</strong> Please continue to send formal referrals via email, fax or HealthLink as per your normal workflow.
+            </p>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer>
+      <div class="footer-inner">
+        <div class="footer-columns">
+          <div class="footer-brand">
+            <h3>Medication Review</h3>
+            <p>
+              Independent Home Medicines Review service partnering with Australian general practices to improve the safe and effective use of medicines at home.
+            </p>
+          </div>
+          <div>
+            <div class="footer-heading">Contact</div>
+            <ul class="footer-list">
+              <li>Phone: 03 4250 9553</li>
+              <li>Fax: 03 9022 7830</li>
+              <li>Email: <a href="mailto:hmr@mymedicationreview.com.au">hmr@mymedicationreview.com.au</a></li>
+              <li>HealthLink ID: medrview</li>
+              <li>Website: <a href="https://www.mymedicationreview.com.au">www.mymedicationreview.com.au</a></li>
+            </ul>
+          </div>
+          <div>
+            <div class="footer-heading">Service</div>
+            <ul class="footer-list">
+              <li><a href="#how-it-works">How it works</a></li>
+              <li><a href="#for-gps">For GPs</a></li>
+              <li><a href="#for-pharmacists">For pharmacists</a></li>
+              <li><a href="#for-patients">For patients</a></li>
+              <li><a href="#eligibility">Eligibility</a></li>
+              <li><a href="#referral">Referral details</a></li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="footer-meta">
+          <span>© <span id="year"></span> Medication Review. ABN 428 204 018 61.</span>
+          <span>This website provides general information only and is not a substitute for individual medical advice.</span>
+        </div>
+      </div>
+    </footer>
+
+  </div>
+
+  <script>
+    // Mobile nav toggle
+    const navToggle = document.querySelector(".nav-toggle");
+    const navLinks = document.getElementById("primary-nav");
+
+    if (navToggle && navLinks) {
+      navToggle.addEventListener("click", () => {
+        const expanded = navToggle.getAttribute("aria-expanded") === "true";
+        navToggle.setAttribute("aria-expanded", String(!expanded));
+        navLinks.classList.toggle("open");
+      });
+
+      navLinks.querySelectorAll("a").forEach((link) => {
+        link.addEventListener("click", () => {
+          navToggle.setAttribute("aria-expanded", "false");
+          navLinks.classList.remove("open");
+        });
+      });
+    }
+
+    // Footer year
+    const yearEl = document.getElementById("year");
+    if (yearEl) {
+      yearEl.textContent = new Date().getFullYear();
+    }
+
+    // Enquiry form thank-you message (visual only; mailto: handles sending)
+    const enquiryForm = document.querySelector(".referral-form");
+    if (enquiryForm) {
+      enquiryForm.addEventListener("submit", function () {
+        let existing = enquiryForm.querySelector(".form-thankyou");
+        if (!existing) {
+          existing = document.createElement("div");
+          existing.className = "form-thankyou";
+          existing.textContent =
+            "Thank you for your enquiry. We’ll review your message and reply to you by email as soon as we can.";
+          enquiryForm.appendChild(existing);
+        }
+      });
+    }
+
+    // Pharmacist tabs
+    const pharmacistTabs = document.querySelectorAll(".pharmacist-tab");
+    const pharmacistPanels = document.querySelectorAll(".pharmacist-tab-panel");
+
+    if (pharmacistTabs.length && pharmacistPanels.length) {
+      pharmacistTabs.forEach((tab) => {
+        tab.addEventListener("click", () => {
+          const target = tab.getAttribute("data-tab");
+
+          pharmacistTabs.forEach((t) => {
+            t.classList.remove("active");
+            t.setAttribute("aria-selected", "false");
+          });
+
+          pharmacistPanels.forEach((panel) => {
+            panel.classList.remove("active");
+            panel.setAttribute("aria-hidden", "true");
+          });
+
+          tab.classList.add("active");
+          tab.setAttribute("aria-selected", "true");
+          const activePanel = document.querySelector(
+            `.pharmacist-tab-panel[data-tab-panel="${target}"]`
+          );
+          if (activePanel) {
+            activePanel.classList.add("active");
+            activePanel.setAttribute("aria-hidden", "false");
+          }
+        });
+      });
+    }
+  </script>
+</body>
+</html>
 
