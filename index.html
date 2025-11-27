@@ -104,16 +104,26 @@
     .brand {
       display: flex;
       align-items: center;
-      gap: 0.75rem;
+      gap: 0.9rem;
     }
 
+    /* LOGO – enlarged + brighter */
     .brand-logo {
-      width: 52px;
-      height: 52px;
+      width: 78px;
+      height: 78px;
       border-radius: 50%;
       overflow: hidden;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-      background: #ffffff;
+      background: radial-gradient(circle at 30% 30%, #ffffff 0, #f4fbff 55%, #e0f2ff 100%);
+      border: 2px solid rgba(47, 111, 163, 0.18);
+      box-shadow: 0 10px 26px rgba(15, 49, 80, 0.28);
+      flex-shrink: 0;
+    }
+
+    .brand-logo img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      display: block;
     }
 
     .brand-text {
@@ -121,11 +131,13 @@
       flex-direction: column;
     }
 
+    /* BRAND NAME – larger and stronger */
     .brand-text span:first-child {
-      font-weight: 700;
-      letter-spacing: 0.03em;
-      font-size: 1.02rem;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      font-size: 1.22rem;
       text-transform: uppercase;
+      line-height: 1.1;
     }
 
     .brand-word-blue {
@@ -137,8 +149,9 @@
     }
 
     .brand-text span:last-child {
-      font-size: 0.86rem;
-      color: var(--color-muted);
+      font-size: 0.9rem;
+      color: var(--color-primary-dark);
+      opacity: 0.8;
     }
 
     nav {
@@ -977,6 +990,25 @@
         justify-content: center;
       }
 
+      /* Header layout on mobile */
+      .header-inner {
+        flex-wrap: wrap;
+        gap: 0.9rem;
+      }
+
+      .brand {
+        flex: 1 1 100%;
+      }
+
+      .brand-logo {
+        width: 68px;
+        height: 68px;
+      }
+
+      .brand-text span:first-child {
+        font-size: 1.1rem;
+      }
+
       .hero-grid {
         gap: 2.4rem;
       }
@@ -1040,6 +1072,10 @@
       .section {
         padding-inline: 1.25rem;
       }
+
+      .brand-text span:first-child {
+        font-size: 1.04rem;
+      }
     }
   </style>
 </head>
@@ -1062,7 +1098,6 @@
       <div class="header-inner">
         <a href="#top" class="brand">
           <div class="brand-logo">
-            <!-- Replace with your logo path -->
             <img src="assets/logo-medication-review.png" alt="Medication Review Australia logo" />
           </div>
           <div class="brand-text">
@@ -1121,7 +1156,6 @@
           </div>
 
           <aside class="hero-card" aria-label="At a glance">
-            <!-- Optional decorative pill / capsule graphic -->
             <img class="hero-pill" src="assets/pill-overlay.png" alt="" aria-hidden="true" />
             <h2>Home Medicines Review made easy</h2>
             <p>
@@ -1148,9 +1182,7 @@
             </div>
 
             <div class="hero-photo">
-              <!-- Banner video: autoplay, muted, looping -->
               <video autoplay muted loop playsinline aria-label="Pharmacist reviewing a patient's medicines at home">
-                <!-- Put this video file in the same folder as this HTML file, or adjust the path -->
                 <source src="assets/Video_Modification_for_Website_Banner.mp4" type="video/mp4" />
                 Your browser does not support the video tag.
               </video>
@@ -1251,7 +1283,6 @@
           </div>
 
           <div class="section-illustration">
-            <!-- Your own GP image -->
             <img src="assets/gp-reviewing-report.jpg" alt="GP reviewing a Medication Review report at the clinic desk" />
             <div class="section-illustration-badge">
               <strong>GP‑centred workflow</strong><br />
@@ -1272,7 +1303,6 @@
             </p>
           </div>
 
-          <!-- TAB BUTTONS -->
           <div class="pharmacist-tab-bar" role="tablist" aria-label="Pharmacist options">
             <button class="pharmacist-tab active" type="button" data-tab="overview" role="tab" aria-selected="true">
               Service overview
@@ -1282,11 +1312,9 @@
             </button>
           </div>
 
-          <!-- Tab 1: Service overview (existing content) -->
           <div class="pharmacist-tab-panel active" data-tab-panel="overview" role="tabpanel" aria-hidden="false">
             <div class="two-col">
               <div class="section-illustration">
-                <!-- Organised medicines / pharmacist image -->
                 <img src="assets/pharmacist-reviewing-chart.jpg" alt="Accredited pharmacist checking organised patient medicines and a medication chart" />
                 <div class="section-illustration-badge">
                   <strong>Because each pill should have a purpose.</strong><br />
@@ -1325,7 +1353,6 @@
             </div>
           </div>
 
-          <!-- Tab 2: Join our team & enquiries -->
           <div class="pharmacist-tab-panel" data-tab-panel="join" role="tabpanel" aria-hidden="true">
             <div class="two-col">
               <div>
@@ -1377,7 +1404,6 @@
       <section id="for-patients" class="section">
         <div class="section-inner two-col">
           <div class="section-illustration">
-            <!-- Patient / organised meds (no pets) -->
             <img src="assets/patient-medications-organised.jpg" alt="Organised patient medicines in a weekly dose organiser on a kitchen table with a pharmacist present" />
             <div class="section-illustration-badge">
               <strong>Patients &amp; carers feel supported</strong><br />
@@ -1516,8 +1542,6 @@
             </p>
           </div>
 
-          <!-- NOTE: For real email sending you will eventually want server-side handling.
-               This mailto: simply opens the user's email program with the data. -->
           <form class="referral-form" action="mailto:hmr@mymedicationreview.com.au" method="post" enctype="text/plain">
             <div class="tagline">Quick enquiry form</div>
             <h3>Ask a question or request a call back</h3>
@@ -1779,4 +1803,3 @@
   </script>
 </body>
 </html>
-
