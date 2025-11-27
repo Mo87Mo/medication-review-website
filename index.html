@@ -1754,20 +1754,43 @@
       yearEl.textContent = new Date().getFullYear();
     }
 
-    // Enquiry form thank-you message (visual only; mailto: handles sending)
-    const enquiryForm = document.querySelector(".referral-form");
-    if (enquiryForm) {
-      enquiryForm.addEventListener("submit", function () {
-        let existing = enquiryForm.querySelector(".form-thankyou");
-        if (!existing) {
-          existing = document.createElement("div");
-          existing.className = "form-thankyou";
-          existing.textContent =
-            "Thank you for your enquiry. We’ll review your message and reply to you by email as soon as we can.";
-          enquiryForm.appendChild(existing);
-        }
-      });
+    // Enquiry form: build an email instead of posting to an insecure form action
+const enquiryForm = document.getElementById("enquiry-form");
+if (enquiryForm) {
+  enquiryForm.addEventListener("submit", function (event) {
+    event.preventDefault(); // stop the normal form submit
+
+    const formData = new FormData(enquiryForm);
+    const name = formData.get("gp-name") || "";
+    const practice = formData.get("practice") || "";
+    const email = formData.get("email") || "";
+    const phone = formData.get("phone") || "";
+    const message = formData.get("message") || "";
+
+    const subject = encodeURIComponent("Website enquiry - Medication Review");
+    const body = encodeURIComponent(
+      `Name: ${name}\n` +
+      `Practice / organisation: ${practice}\n` +
+      `Email: ${email}\n` +
+      `Phone: ${phone}\n\n` +
+      `Enquiry:\n${message}`
+    );
+
+    // Open the user's email program with the enquiry filled in
+    window.location.href = `mailto:hmr@mymedicationreview.com.au?subject=${subject}&body=${body}`;
+
+    // Show on-page thank you message
+    let existing = enquiryForm.querySelector(".form-thankyou");
+    if (!existing) {
+      existing = document.createElement("div");
+      existing.className = "form-thankyou";
+      existing.textContent =
+        "Thank you for your enquiry. Your email program will open so you can send the message to us.";
+      enquiryForm.appendChild(existing);
     }
+  });
+}
+
 
     // Pharmacist tabs
     const pharmacistTabs = document.querySelectorAll(".pharmacist-tab");
